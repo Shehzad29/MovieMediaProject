@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { IMG_URL, getcolor } from '../App';
 
-function MovieList({ movies, onMovieClick }) {
+function MovieList({ movies, onMovieClick, onAddToFavorites }) {
   const [showAlert, setShowAlert] = useState(false);
 
-  const handleAddToFavorites = (e) => {
+  const handleAddToFavorites = (e, movie) => {
     e.stopPropagation();
+    onAddToFavorites(movie); // Call the parent function to add to favorites
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
-    }, 3000); // Hide the alert after 3 seconds
+    }, 3000);
   };
 
   return (
@@ -26,7 +27,7 @@ function MovieList({ movies, onMovieClick }) {
           <div className="movieOverview">
             <h3>Overview</h3>
             <div className="overview-heart">
-              <button className="heart-button" onClick={handleAddToFavorites}>
+              <button className="heart-button" onClick={(e) => handleAddToFavorites(e, movie)}>
                 &#10084;
               </button>
               <p>{movie.overview}</p>
@@ -34,9 +35,7 @@ function MovieList({ movies, onMovieClick }) {
             <button className="trailer" id={movie.id}>
               Trailer
             </button>
-            <button className="rate">
-              Rate
-            </button>
+            <button className="rate">Rate</button>
           </div>
         </div>
       ))}

@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 :root{
-    --primary-color:#00010F;
+    --primary-color:#000000;
     --secondary-color: #020744;
 }
 
@@ -153,6 +153,19 @@ main{
     margin-top: 1px;
     color: white;
     font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    border: 0px;
+    border-radius: 50px;
+    padding: 10px 15px;
+  }
+  .tmdb{
+    background-color: darkred;
+    text-decoration: none;
+    margin-right: 600px;
+    margin-top: 1px;
+    color: white;
+    font-size: 16px;
     font-weight: bold;
     text-decoration: none;
     border: 0px;

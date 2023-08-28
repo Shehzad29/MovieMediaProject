@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate from react-router-dom
-import './styles/login.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // Import Link and useNavigate from react-router-dom
+import "./styles/login.css";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false); // State for login success
   const navigate = useNavigate(); // Create a navigation function
 
@@ -24,9 +24,22 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add your login logic here, e.g., send the data to a backend API
-    console.log('Email:', email);
-    console.log('Username:', username);
-    console.log('Password:', password);
+    console.log("Email:", email);
+    console.log("Username:", username);
+    console.log("Password:", password);
+
+    const loginObj = {
+      username: username,
+      email: email,
+      password: password,
+    };
+    fetch(
+      "https://chimerical-sunburst-f3342f.netlify.app/.netlify/functions/api/login",
+      {
+        method: "POST",
+        body: JSON.stringify(loginObj)
+      }
+    );
 
     // Simulate login success and show alert
     setLoginSuccess(true);
@@ -35,8 +48,10 @@ function Login() {
     setTimeout(() => {
       setLoginSuccess(false);
       // Navigate to the homepage after login success
-      navigate('/');
+      navigate("/");
     }, 3000); // Hide the alert and navigate after 3 seconds (adjust as needed)
+
+    const loginUser = () => {};
   };
 
   return (

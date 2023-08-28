@@ -5,6 +5,7 @@ import "./styles/Auth.css"
 function Header({ searchTerm, onSearchChange, onSearchSubmit, isLoggedIn, onLogout }) {
   return (
     <header>
+      <Link to='/' className='tmdb'> CIBC TMDB</Link>
       <Link to='/favourite' className='favourite'> My Favourites</Link>
       <form id="form" onSubmit={onSearchSubmit}>
         <input

@@ -1,5 +1,3 @@
-const { password } = process.env;
-
 class Server {
 
   constructor() {
@@ -18,7 +16,7 @@ class Server {
       host: "db4free.net",
       database: "movies_app_db",
       user: "tmdb_user",
-      password: password
+      password: "midb@1234"
     });
     this.con.connect(function (err) {
       if (err) throw err;

@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Header from './header';
 import MovieList from './movies/movielist';
+import Favorites from './movies/favourite';
 import Login from './login';
 import Register from './register';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Import BrowserRouter, Route, and Routesimport Login from './login'; // Import the Login component
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 export const API_KEY = 'api_key=2e65e5f5c5ba081b6ec96ea651bafe73';
 export const BASE_URL = 'https://api.themoviedb.org/3';
@@ -27,13 +28,14 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [overlayContent, setOverlayContent] = useState('');
+  const [favoriteMovies, setFavoriteMovies] = useState([]);
 
   useEffect(() => {
     getMovies(API_URL);
   }, []);
 
   const getMovies = (url) => {
-    fetch(url)
+    fetch('https://soft-travesseiro-9c8430.netlify.app/.netlify/functions/getlist/popularmovies')
       .then((res) => res.json())
       .then((data) => {
         showMovies(data.results);
@@ -91,6 +93,12 @@ function App() {
     }
   };
 
+  const addMovieToFavorites = (movie) => {
+    if (!favoriteMovies.some((favMovie) => favMovie.id === movie.id)) {
+      setFavoriteMovies([...favoriteMovies, movie]);
+    }
+  };
+
   return (
     <div className="App">
       <Header
@@ -107,11 +115,20 @@ function App() {
         </div>
       </div>
       <Routes>
-        {/* Define your routes within the Router component */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/" element={<MovieList movies={movies} onMovieClick={(movie) => openNav(movie)} />} />
-          </Routes>
+        <Route path="/favourite" element={<Favorites favoriteMovies={favoriteMovies} />} />
+        <Route
+          path="/"
+          element={
+            <MovieList
+              movies={movies}
+              onMovieClick={(movie) => openNav(movie)}
+              onAddToFavorites={addMovieToFavorites}
+            />
+          }
+        />
+      </Routes>
     </div>
   );
 }

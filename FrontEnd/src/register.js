@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import './styles/register.css'; // Import your CSS file for registration
+import { useNavigate } from 'react-router-dom';
+import './styles/register.css';
 
 function Registration() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [registrationSuccess, setRegistrationSuccess] = useState(false); // State for registration success
-  const navigate = useNavigate(); // Create a navigation function
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -21,23 +21,38 @@ function Registration() {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your registration logic here, e.g., send the data to a backend API
-    // For this example, we'll just simulate a successful registration
-    console.log('Email:', email);
-    console.log('Username:', username);
-    console.log('Password:', password);
 
-    // Simulate registration success and show alert
-    setRegistrationSuccess(true);
+    // Create an object with the registration data
+    const registrationData = {
+      email: email,
+      username: username,
+      password: password,
+    };
 
-    // Automatically hide the alert after a few seconds
-    setTimeout(() => {
+    try {
+      const response = await fetch('https://chimerical-sunburst-f3342f.netlify.app/.netlify/functions/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(registrationData),
+      });
+
+      if (response.status === 200) {
+        setRegistrationSuccess(true);
+        setTimeout(() => {
+          setRegistrationSuccess(false);
+          navigate('/login');
+        }, 3000);
+      } else {
+        setRegistrationSuccess(false);
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
       setRegistrationSuccess(false);
-      // Navigate to the login component after registration success
-      navigate('/login');
-    }, 3000); // Hide the alert and navigate after 3 seconds (adjust as needed)
+    }
   };
 
   return (
