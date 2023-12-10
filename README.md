@@ -1,4 +1,6 @@
-THIS IS A MOVIE MEDIA APP
+
+THIS IS![Screenshot (728)](https://github.com/Shehzad29/MovieMediaProject/assets/143242895/1fc19d1b-eeba-4931-aaaf-a620709ed68e)
+ A MOVIE MEDIA APP
 
 IT CAN LOAD MOVIES FROM THE MOVIE API FROM TMDB 
 
